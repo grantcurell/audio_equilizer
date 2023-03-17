@@ -14,7 +14,7 @@ except ImportError:
 matplotlib.use('Qt5Agg')
 
 # Load the audio file into a numpy array
-audio_data, sample_rate = librosa.load('D:/哈利波特/1哈利波特与魔法石/trimmed_audio/1_HP-01-[AudioTrimmer.com].mp3')
+audio_data, sample_rate = librosa.load('audio_files/1_HP-01-[AudioTrimmer.com]_cleaned.mp3')
 
 # Print the bit depth
 print(f"Bit depth: {audio_data.dtype.itemsize * 8}")

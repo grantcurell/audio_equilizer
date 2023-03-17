@@ -1,5 +1,18 @@
 # Audio Fixer
 
+- [Audio Fixer](#audio-fixer)
+  - [The Problem](#the-problem)
+  - [Visualization](#visualization)
+    - [Original File](#original-file)
+    - [Original File Sample](#original-file-sample)
+    - [Cleaned File](#cleaned-file)
+    - [Cleaned File Sample](#cleaned-file-sample)
+    - [But They are the Same](#but-they-are-the-same)
+  - [Definitions](#definitions)
+    - [What is dBFS?](#what-is-dbfs)
+    - [Maximum Absolute Amplitude](#maximum-absolute-amplitude)
+
+
 ## The Problem
 
 My wonderful Chinese teacher sent me a full radio reading of Harry Potter (哈利波特) but it sounded... well... terrible. I could barely listen to it.
@@ -27,6 +40,16 @@ Generated with [this code](visualize_audio.py)
 ### Cleaned File Sample
 
 [This is the first chapter cleaned](audio_files/1_HP-01-[AudioTrimmer.com]_cleaned.mp3)
+
+### But They are the Same
+
+Yes, because we maintained the audio characteristics of the file largely the same, the dynamic range and the relative amplitude are the same. However, if you compare the noise and the absolute amplitude you can see that they have changed.
+
+![](images/2023-03-16-20-11-03.png)
+
+Generated with [this code](compare_absolute_amplitude.py)
+
+In the lower chart you can see how the green line rockets upward. That is the background hum you hear in the original audio file.
 
 ## Definitions
 
