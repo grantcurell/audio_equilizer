@@ -16,7 +16,7 @@
 
 ## The Problem
 
-My wonderful Chinese teacher sent me a full radio reading of Harry Potter (哈利波特) but it sounded... well... terrible. I could barely listen to it.
+My wonderful Chinese teacher sent me a full radio reading of Harry Potter (哈利波特) but it sounded... well... bad. But I really wanted to listen to it!
 
 ## Visualization
 
@@ -26,7 +26,7 @@ My wonderful Chinese teacher sent me a full radio reading of Harry Potter (哈�
 
 Generated with [this code](visualize_audio.py)
 
-This is an analysis of the original audio file. The most indicative graph is #3 where 0 is the loudest possible sound the audio format will accept. As you can see, a high percentage of the original audio file was getting close to 0 so it sounded *very* loud.
+This is an analysis of the original audio file.
 
 ### Original File Sample
 
