@@ -20,6 +20,19 @@ args = parser.parse_args()
 os.makedirs(args.output_dir, exist_ok=True)
 
 
+def apply_compression(audio_segment, threshold, ratio):
+    compressed_audio = audio_segment.empty()
+    for chunk in audio_segment[::10]:
+        chunk_db = chunk.dBFS
+        if chunk_db > threshold:
+            difference = chunk_db - threshold
+            compressed_chunk = chunk - (difference / ratio)
+        else:
+            compressed_chunk = chunk
+        compressed_audio += compressed_chunk
+    return compressed_audio
+
+
 def process_audio_file(audio_file_path):
     # Load the audio file
     audio_data, sample_rate = librosa.load(audio_file_path, sr=None)
@@ -28,7 +41,7 @@ def process_audio_file(audio_file_path):
     max_amplitude = max(abs(audio_data))
 
     # Define the desired maximum amplitude for normalization
-    target_amplitude = 0.65
+    target_amplitude = 0.8
 
     # Calculate the scaling factor for normalization
     scaling_factor = target_amplitude / max_amplitude
@@ -51,9 +64,18 @@ def process_audio_file(audio_file_path):
     output_file_path = os.path.join(output_dir, os.path.splitext(os.path.basename(audio_file_path))[0] + '_cleaned.mp3')
     sf.write(output_file_path, cleaned_audio, sample_rate)
 
-    # Convert the WAV file to MP3 using pydub
-    audio = AudioSegment.from_file(output_file_path, format='mp3')
-    audio.export(os.path.splitext(output_file_path)[0] + '.mp3', format='mp3')
+    # Load the cleaned audio as an AudioSegment
+    audio = AudioSegment.from_file(output_file_path, format='wav')
+
+    # Apply dynamic range compression
+    amplitude_envelope = audio.dBFS
+    threshold = amplitude_envelope + audio.dBFS_std()  # First standard deviation from the mean
+    ratio = 4  # Compression ratio, adjust this value as needed
+    compressed_audio = apply_compression(audio, threshold, ratio)
+
+    # Save the compressed audio to a new MP3 file
+    compressed_output_file_path = os.path.splitext(output_file_path)[0] + '_compressed.mp3'
+    compressed_audio.export(compressed_output_file_path, format='mp3')
 
     logging.info(f"Processed file: {audio_file_path}")
 
